@@ -193,6 +193,8 @@ function SearchBar() {
   }
 
   return (
+    <Suspense>
+
     <form onSubmit={onSubmit} className="hidden items-center lg:inline-flex">
       <Input
         id="search"
@@ -202,7 +204,8 @@ function SearchBar() {
         placeholder="Search products..."
         className="h-9 lg:w-[300px]"
         defaultValue={defaultSearchQuery}
-      />
+        />
     </form>
+        </Suspense>
   );
 }
