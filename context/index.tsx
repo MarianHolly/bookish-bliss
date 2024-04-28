@@ -1,8 +1,15 @@
 "use client";
 
-import { useLocalStorage } from "@/hooks/use-local-storage";
+import {
+  createContext,
+  useContext,
+  ReactNode,
+  useState,
+  useEffect,
+} from "react";
+import { useLocalStorage } from 'usehooks-ts'
+
 import { Product } from "@/lib/interface";
-import { createContext, useContext, ReactNode, useCallback } from "react";
 
 interface CartContextType {
   cart: Product[];
@@ -18,6 +25,8 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 interface CartProviderProps {
   children: ReactNode;
 }
+
+
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cart, setCart] = useLocalStorage<Product[]>("shopping-cart", []);

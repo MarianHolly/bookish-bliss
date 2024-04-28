@@ -13,11 +13,11 @@ export default function CartItems() {
     useCart();
 
   return (
-    <ul className="divide-y divide-gray-200 border-y border-gray-200 relative">
+    <div className="divide-y divide-gray-200 border-y border-gray-200 relative">
       <div className="absolute inset-0 bg-slate-100 opacity-70 rounded-lg"></div>
 
       {cart?.map((item) => (
-        <li key={item.id} className="flex py-6 sm:py-10 relative m-1 ">
+        <div key={item.id} className="flex py-6 sm:py-10 relative m-1 ">
           <div className="shrink-0 pl-6">
             <Image
               src={urlForImage(item.image)}
@@ -76,8 +76,8 @@ export default function CartItems() {
               </div>
             </div>
           </div>
-        </li>
+        </div>
       ))}
-    </ul>
+    </div>
   );
 }
