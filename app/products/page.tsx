@@ -5,6 +5,7 @@ import ProductSort from "@/components/product-sort";
 import { cn } from "@/lib/utils";
 import { client } from "@/sanity/lib/client";
 import { Product } from "@/lib/interface";
+import { Suspense } from "react";
 
 async function getProducts({ filter, order }: any) {
   const query = `*[_type == "product" ${filter} ] ${order} {
@@ -100,7 +101,10 @@ export default async function ProductsPage({ searchParams }: Props) {
           >
             <div className="hidden lg:block">
               {/* Filters */}
+              <Suspense>
+
               <ProductFilter />
+              </Suspense>
             </div>
             <div className="grid grid-cols-1 gap-x-2 gap-y-10 sm:grid-cols-3 lg:col-span-3 lg:gap-x-4">
               {/* Product Grid */}

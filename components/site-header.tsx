@@ -22,7 +22,7 @@ import {
   CommandItem,
   CommandList,
 } from "./ui/command";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { Input } from "./ui/input";
 
 export default function Header() {
@@ -36,7 +36,9 @@ export default function Header() {
         <MainNav />
         <div className="flex flex-1 items-center space-x-2 justify-end">
           <div className="flex-none">
-            <SearchBar />
+            <Suspense>
+              <SearchBar />
+            </Suspense>
           </div>
           <CartNav />
         </div>

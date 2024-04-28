@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/sheet";
 import { Filter } from "lucide-react";
 import ProductFilter from "./product-filter";
+import { Suspense } from "react";
 
 const sortOptions = [
   { name: "Newest", value: "/?date=desc" },
@@ -51,7 +52,10 @@ export default function ProductSort() {
               Narrow your product search using the options below.
             </SheetDescription>
           </SheetHeader>
+          <Suspense>
+
           <ProductFilter />
+          </Suspense>
         </SheetContent>
         <SheetTrigger className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden">
           <Filter className="h-5 w-5" aria-hidden="true" />
