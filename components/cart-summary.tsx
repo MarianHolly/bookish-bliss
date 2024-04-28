@@ -11,25 +11,29 @@ export default function CartSummary() {
     0
   );
 
-  const totalAmount = subTotalAmount + 4.5 
+  const totalAmount = subTotalAmount + 4.5;
 
   async function checkout() {
-    await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/checkout`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ products: cart }),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((response) => {
-        console.log(response);
-        if (response.url) {
-          window.location.href = response.url;
-        }
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ products: cart }),
       });
+
+      if (!response.ok) {
+        throw new Error("Failed to checkout");
+      }
+
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -44,7 +48,9 @@ export default function CartSummary() {
       <dl className="mt-6 space-y-4">
         <div className="flex items-center justify-between">
           <dt className="text-sm">Subtotal</dt>
-          <dd className="text-sm font-medium">{subTotalAmount.toFixed(2)} Eur</dd>
+          <dd className="text-sm font-medium">
+            {subTotalAmount.toFixed(2)} Eur
+          </dd>
         </div>
         <div className="flex items-center justify-between border-t border-slate-200 pt-4">
           <dt className="flex items-center text-sm">
