@@ -30,28 +30,28 @@ const myPortableTextComponents: Partial<PortableTextReactComponents> = {
 };
 
 async function getCategory({ params }: Props) {
-  const query = `*[_type == "category" && slug.current == "${params.slug}"][0]{
+  const query = `*[_type == "category" && slug.current == $slug][0]{
     "id": _id,
     "slug": slug.current,
     name,
-    subtitle, 
-    image, 
+    subtitle,
+    image,
     body
     }`;
-  const data = await client.fetch(query);
+  const data = await client.fetch(query, { slug: params.slug });
   return data;
 }
 
 async function getProducts({ params }: Props) {
-  const query = `*[_type == "product"  && references(*[_type=="category" && slug.current == "${params.slug}"]._id)][0..6] {
+  const query = `*[_type == "product"  && references(*[_type=="category" && slug.current == $slug]._id)][0..6] {
     "id": _id,
     "slug": slug.current,
-    name, 
-    author, 
-    image, 
+    name,
+    author,
+    image,
     body
   }`;
-  const data = await client.fetch(query);
+  const data = await client.fetch(query, { slug: params.slug });
   return data;
 }
 

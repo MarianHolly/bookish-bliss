@@ -7,21 +7,47 @@ import { client } from "@/sanity/lib/client";
 import { Product } from "@/lib/interface";
 import { Suspense } from "react";
 
-async function getProducts({ filter, order }: any) {
-  const query = `*[_type == "product" ${filter} ] ${order} {
+async function getProducts({
+  categorySlug,
+  publisherSlug,
+  searchTerm
+}: any) {
+  // Build query with proper parameter handling
+  let query = `*[_type == "product"`;
+  const params: any = {};
+
+  // Add category filter (parameterized)
+  if (categorySlug) {
+    query += ` && references(*[_type=="category" && slug.current == $categorySlug]._id)`;
+    params.categorySlug = categorySlug;
+  }
+
+  // Add publisher filter (parameterized)
+  if (publisherSlug) {
+    query += ` && references(*[_type=="publisher" && slug.current == $publisherSlug]._id)`;
+    params.publisherSlug = publisherSlug;
+  }
+
+  // Add search filter (parameterized)
+  if (searchTerm) {
+    query += ` && name match $searchTerm`;
+    params.searchTerm = searchTerm;
+  }
+
+  query += `] {
     "id": _id,
     "slug": slug.current,
     name,
-    author, 
-    price, 
+    author,
+    price,
     image,
     category[]-> {name, "slug": slug.current},
     publisher[]-> {name, "slug": slug.current},
-    bestseller, 
+    bestseller,
     recent
   }`;
 
-  const data = await client.fetch(query);
+  const data = await client.fetch(query, params);
 
   return data;
 }
@@ -40,24 +66,12 @@ export default async function ProductsPage({ searchParams }: Props) {
   // Receive Params
   const { date = "desc", price, category, publisher, search } = searchParams;
 
-  // Sorting
-  const priceOrder = price ? ` | order(price ${price})` : "";
-  const dateOrder = date ? ` | order(_createdAt ${date})` : "";
-  const order = `${priceOrder}`;
-
-  // Filtering
-  const categoryFilter = category
-    ? ` && references(*[_type=="category" && slug.current == "${category}"]._id)`
-    : "";
-  const publisherFilter = publisher
-    ? ` && references(*[_type=="publisher" && slug.current == "${publisher}"]._id)`
-    : "";
-
-  // Searching
-  const searchFilter = search ? `&& name match "${search}"` : "";
-
-  const filter = `${categoryFilter}${publisherFilter}${searchFilter}`;
-  const products: Product[] = await getProducts({ filter, order });
+  // Fetch products with safe parameterized queries
+  const products: Product[] = await getProducts({
+    categorySlug: category,
+    publisherSlug: publisher,
+    searchTerm: search
+  });
 
   return (
     <div className="min-h-[65vh]">
