@@ -7,7 +7,7 @@ const createJestConfig = nextJest({
 
 const config: Config = {
   coverageProvider: 'v8',
-  testEnvironment: 'jsdom',
+  testEnvironment: 'node',
   preset: 'ts-jest',
   testMatch: ['**/__tests__/**/*.test.ts', '**/__tests__/**/*.test.tsx'],
   moduleNameMapper: {
@@ -20,6 +20,8 @@ const config: Config = {
     '!app/**/*.d.ts',
     '!**/*.test.{ts,tsx}',
   ],
+  testPathIgnorePatterns: ['/node_modules/', '/.next/'],
+  transformIgnorePatterns: ['/node_modules/'],
 };
 
 export default createJestConfig(config);
