@@ -16,16 +16,16 @@ interface Props {
 }
 
 async function getProduct({ params }: Props) {
-  const query = `*[_type == "product" && slug.current == "${params.slug}"][0]{
+  const query = `*[_type == "product" && slug.current == $slug][0]{
     "id": _id,
     "slug": slug.current,
     name,
-    author, 
-    price, 
+    author,
+    price,
     "image": image.asset._ref,
     body
   }`;
-  const data = await client.fetch(query);
+  const data = await client.fetch(query, { slug: params.slug });
   return data;
 }
 
