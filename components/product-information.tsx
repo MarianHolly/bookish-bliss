@@ -98,10 +98,12 @@ const ProductInformation: React.FC<ProductInformationProps> = ({ product }) => {
         <h3 className="my-2 font-bold text-xl text-slate-600 dark:text-slate-200 ml-auto">
           Description
         </h3>
-        <PortableText
-          value={product.body}
-          components={myPortableTextComponents}
-        />
+        {product.body && (
+          <PortableText
+            value={product.body}
+            components={myPortableTextComponents}
+          />
+        )}
       </div>
     </div>
   );
