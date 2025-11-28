@@ -4,9 +4,16 @@ import { useState } from "react";
 import { ArrowLeftCircle, ArrowRightCircle } from "lucide-react";
 
 import Image from "next/image";
+import { toBase64, shimmer } from "@/lib/image";
 import Image1 from "../assets/bookstore-01.jpeg";
 import Image2 from "../assets/bookstore-02.jpeg";
 import Image3 from "../assets/bookstore-03.jpeg";
+
+const SLIDE_DESCRIPTIONS = [
+  "Cozy bookstore interior with warm lighting",
+  "Organized bookshelf display",
+  "Modern reading nook",
+];
 
 export default function Slider() {
   const slides = [Image1, Image2, Image3];
@@ -36,8 +43,16 @@ export default function Slider() {
             <Image
               key={index}
               src={image}
-              alt="Image"
+              alt={SLIDE_DESCRIPTIONS[index]}
+              width={1200}
+              height={384}
               className="object-cover object-center h-full w-full"
+              placeholder="blur"
+              blurDataURL={`data:image/webp;base64,${toBase64(
+                shimmer(1200, 384)
+              )}`}
+              priority={index === 0}
+              sizes="100vw"
             />
           );
         })}
