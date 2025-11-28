@@ -10,7 +10,7 @@ export interface Product {
   name: string;
   author: string;
   price: number;
-  quantity?: number; // Used in cart
+  quantity: number; // Always set in cart context
   image: Image;
   body?: PortableTextBlock[];
   description?: string;
