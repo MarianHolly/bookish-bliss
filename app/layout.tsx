@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { CartProvider } from "@/context";
 import Header from "@/components/site-header";
 import Footer from "@/components/site-footer";
+import WebVitalsReporter from "@/components/web-vitals-reporter";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -40,6 +41,7 @@ export default function RootLayout({
             <div className="relative">{children}</div>
           </div>
           <Footer />
+          <WebVitalsReporter />
         </CartProvider>
       </body>
     </html>
