@@ -51,19 +51,13 @@ const ProductRow: React.FC<ProductRowProps> = async ({ title, type }) => {
                 href={`/product/${product.slug}`}
                 className="mb-3"
               >
-                <div
-                  className="flex-none w-44 h-64 rounded-sm py-4 px-2 inline-block hover:scale-105 ease-in-out duration-300 scroll-smooth cursor-pointer"
-                  style={{
-                    position: "relative",
-                    overflow: "hidden",
-                  }}
-                >
+                <div className="flex-none w-44 h-64 rounded-sm py-4 px-2 inline-block hover:scale-105 ease-in-out duration-300 scroll-smooth cursor-pointer relative overflow-hidden">
                   <Image
                     src={urlForImage(product.image)}
-                    alt="Product Image"
-                    layout="fill"  
-                    objectFit="cover" 
-                    className="rounded-sm" 
+                    alt={`Cover of ${product.name}`}
+                    fill
+                    className="object-cover rounded-sm"
+                    sizes="(max-width: 640px) 100vw, 176px"
                   />
                 </div>
 
