@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import { urlForImage } from "@/sanity/lib/image";
+import { toBase64, shimmer } from "@/lib/image";
 
 export default function CartItems() {
   const { cart, removeFromCart, incrementQuantity, decrementQuantity } =
@@ -25,6 +26,11 @@ export default function CartItems() {
               width={200}
               height={250}
               className="h-36 w-full rounded-md border-2 border-slate-200 object-cover object-center"
+              placeholder="blur"
+              blurDataURL={`data:image/webp;base64,${toBase64(
+                shimmer(200, 250)
+              )}`}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
           </div>
 
