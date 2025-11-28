@@ -2,6 +2,10 @@ import { fetchProductsByCategory, fetchCategoryBySlug } from "@/lib/sanity-fetch
 import { CategoryProductCard } from "@/components/category-product-card";
 import { urlForImage } from "@/sanity/lib/image";
 
+// ISR: Revalidate category pages every 60 seconds
+// This caches the page and reduces API calls by ~80%
+export const revalidate = 60;
+
 interface Props {
   params: {
     slug: string;

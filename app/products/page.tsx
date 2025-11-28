@@ -5,6 +5,10 @@ import { ProductSort } from "@/components/product-sort";
 import { ProductList } from "@/components/product-list";
 import { cn } from "@/lib/utils";
 
+// ISR: Revalidate products page every 60 seconds
+// This caches the page and reduces API calls by ~80%
+export const revalidate = 60;
+
 interface Props {
   searchParams: {
     date?: string;

@@ -9,6 +9,10 @@ import { shimmer, toBase64 } from "@/lib/image";
 
 import ProductInformation from "@/components/product-information";
 
+// ISR: Revalidate product details every 3600 seconds (1 hour)
+// Product details change less frequently, so we cache longer
+export const revalidate = 3600;
+
 interface Props {
   params: {
     slug: string;
