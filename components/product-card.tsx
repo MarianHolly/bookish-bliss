@@ -3,6 +3,7 @@ import { Product } from "@/lib/interface";
 
 import Image from "next/image";
 import { urlForImage } from "@/sanity/lib/image";
+import { toBase64, shimmer } from "@/lib/image";
 
 interface ProductProps {
   product: Product;
@@ -18,6 +19,11 @@ export default async function ProductCard({ product }: ProductProps) {
           width={285}
           height={320}
           className="w-full h-full sm:h-80 md:h-96 lg:h-80 xl:h-96 object-cover object-center duration-300 hover:scale-105 ease-in-out"
+          placeholder="blur"
+          blurDataURL={`data:image/webp;base64,${toBase64(
+            shimmer(285, 320)
+          )}`}
+          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
         />
         <div className="pl-1">
           <h3 className="pt-3 text-[18px] font-semibold">{product.name}</h3>
