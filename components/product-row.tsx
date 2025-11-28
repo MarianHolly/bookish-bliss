@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import { Product } from "@/lib/interface";
 import { client } from "@/sanity/lib/client";
 import { urlForImage } from "@/sanity/lib/image";
+import { toBase64, shimmer } from "@/lib/image";
 
 interface ProductRowProps {
   title: string;
@@ -45,7 +46,7 @@ const ProductRow: React.FC<ProductRowProps> = async ({ title, type }) => {
           {products.length === 0 ? (
             <Message message={`Something went wrong...`} />
           ) : (
-            products.map((product) => (
+            products.map((product, index) => (
               <Link
                 key={product.id}
                 href={`/product/${product.slug}`}
@@ -58,6 +59,11 @@ const ProductRow: React.FC<ProductRowProps> = async ({ title, type }) => {
                     fill
                     className="object-cover rounded-sm"
                     sizes="(max-width: 640px) 100vw, 176px"
+                    placeholder="blur"
+                    blurDataURL={`data:image/webp;base64,${toBase64(
+                      shimmer(176, 240)
+                    )}`}
+                    priority={index < 4}
                   />
                 </div>
 
