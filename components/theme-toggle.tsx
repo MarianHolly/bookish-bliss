@@ -9,18 +9,11 @@ import { Button } from './ui/button';
  * ThemeToggle component
  * Displays theme toggle button (Moon/Sun icon)
  * Cycles through: light → dark → system → light
+ *
+ * Note: This must be wrapped in ThemeProvider and only rendered on client
  */
-export function ThemeToggle() {
+function ThemeToggleInner() {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return <Button size="icon" variant="outline" className="h-9 w-9" disabled />;
-  }
 
   const handleClick = () => {
     const themes: Array<'light' | 'dark' | 'system'> = [
@@ -49,4 +42,23 @@ export function ThemeToggle() {
       )}
     </Button>
   );
+}
+
+/**
+ * ThemeToggle wrapper
+ * Handles client-only rendering to prevent SSR errors
+ */
+export function ThemeToggle() {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Return empty fragment during SSR/static generation
+  if (!mounted) {
+    return <div className="h-9 w-9" />;
+  }
+
+  return <ThemeToggleInner />;
 }

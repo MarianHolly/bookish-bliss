@@ -5,12 +5,13 @@ import { Suspense } from "react";
 import { MainNav } from "./main-nav";
 import { SearchBar } from "./search-bar";
 import { CommandMenu } from "./command-menu";
+import { ThemeToggle } from "./theme-toggle";
 import { CartNav } from "./cart-nav";
 
 /**
  * Site header component
  * Composition-only wrapper for all header sub-components
- * Renders logo, navigation, search bar, command menu, and cart
+ * Renders logo, navigation, search bar, command menu, theme toggle, and cart
  */
 export default function Header() {
   const pathname = usePathname();
@@ -29,6 +30,7 @@ export default function Header() {
             </Suspense>
           </div>
           <CommandMenu />
+          <ThemeToggle />
           <CartNav />
         </div>
       </div>
