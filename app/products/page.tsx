@@ -36,34 +36,34 @@ export default async function ProductsPage({ searchParams }: Props) {
   return (
     <div className="min-h-[65vh]">
       {/* Hero Section */}
-      <section className="relative mb-6">
-        <div className="absolute inset-0 bg-slate-100 opacity-30 rounded-lg"></div>
-        <div className="rounded-lg flex flex-col items-center justify-center h-60 relative">
-          <p className="mx-12 text-lg lg:text-xl text-slate-950 font-light text-center italic">
-            Step into a world of literary wonders, where imagination knows no
-            bounds and every story has the power to transport you to new and
-            captivating realms.
+      <section className="mb-12 py-16">
+        <div className="text-center space-y-4">
+          <h1 className="text-4xl md:text-5xl font-semibold text-foreground">
+            Explore Our Collection
+          </h1>
+          <p className="text-base md:text-lg text-text-secondary max-w-2xl mx-auto">
+            Discover thousands of carefully curated books across all genres and categories
           </p>
         </div>
       </section>
 
-      {/* Results Header */}
-      <div className="flex flex-col items-center justify-between border-b border-gray-200 pb-4 pt-6 mb-6">
-        <div className="w-full flex flex-row justify-between items-center mb-4">
-          <h2 className="text-2xl font-semibold text-slate-950">
+      {/* Results & Sort Header */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-border mb-8">
+        <div>
+          <h2 className="text-xl font-semibold text-foreground">
             {products?.length === 0
               ? "No products found"
               : `${products?.length} result${products?.length === 1 ? "" : "s"}`}
           </h2>
-          <ProductSort />
         </div>
+        <ProductSort />
       </div>
 
       {/* Filters + Products Grid */}
-      <section className="pb-24 pt-6">
+      <section className="pb-24">
         <div
           className={cn(
-            "grid grid-cols-1 gap-x-8 gap-y-10",
+            "grid grid-cols-1 gap-6",
             products?.length > 0 ? "lg:grid-cols-4" : "lg:grid-cols-[1fr_3fr]"
           )}
         >
@@ -72,7 +72,7 @@ export default async function ProductsPage({ searchParams }: Props) {
               <ProductSearchFilter categories={categories} />
             </Suspense>
           </aside>
-          <main className="lg:col-span-3">
+          <main className={products?.length > 0 ? "lg:col-span-3" : ""}>
             <ProductList products={products} />
           </main>
         </div>
